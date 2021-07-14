@@ -1,5 +1,5 @@
 ## This project is Signal-clone :
-   A cross-platform clone of the famous Signal platform. The application alow users to send one-to-one and group messages. I used to devollop the application : 
+   A cross-platform clone of the famous Signal platform. The application alow users to send one-to-one and group messages. I used to devolop the application : 
    - Expo - Cli
    - ReactNative - React-navigation
    - Firebase (FireStore + Firbase EmailPassword Auth ).
