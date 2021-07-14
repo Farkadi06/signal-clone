@@ -1,13 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useLayoutEffect } from 'react'
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Avatar } from 'react-native-elements/dist/avatar/Avatar'
 import CustomListItem from '../components/CustomListItem'
 import { auth } from '../firebase';
 import {AntDesign, SimpleLineIcons} from '@expo/vector-icons';
+import { useEffect } from 'react'
+import { db } from '../firebase'
+import { ScrollView } from 'react-native'
 
 
 const HomeScreen = ({navigation}) => {
+    const [chats, setChats] = useState([]);
+
+    const signOutUser = () => {
+        auth.signOut().then(()=>{
+            navigation.replace('Login');
+        })
+    }
+
+    useEffect(()=>{
+        const unsubscribe = db.collection('chats').onSnapshot(snapshot=> (
+            setChats(snapshot.docs.map(doc =>( {
+                id : doc.id,
+                data : doc.data()
+            })))
+        ));
+
+        return unsubscribe;
+    },[]);
 
     useLayoutEffect(()=>{
         console.log(auth.currentUser)
@@ -20,7 +41,8 @@ const HomeScreen = ({navigation}) => {
                 (<View style={{marginLeft:20}}>
                     <Avatar 
                         rounded
-                            source= {{uri: auth?.currentUser?.photoURL}}/>
+                        onPress={signOutUser}
+                        source= {{uri: auth?.currentUser?.photoURL}}/>
                 </View>),
             headerRight: () => (
                 <View 
@@ -44,7 +66,17 @@ const HomeScreen = ({navigation}) => {
 
     return (
         <SafeAreaView>
-            <CustomListItem/>
+            <ScrollView>
+                {
+                    chats.map(({id,data : {chatName}})=> (
+                        <CustomListItem 
+                            key={id}
+                            id={id}
+                            chatName={chatName}
+                                />
+                    ))
+                }
+            </ScrollView>
         </SafeAreaView>
     )
 }

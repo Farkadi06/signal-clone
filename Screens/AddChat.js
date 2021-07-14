@@ -4,10 +4,11 @@ import { useLayoutEffect } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import {Button, Input} from "react-native-elements"
 import { Icon } from 'react-native-vector-icons/FontAwesome'
-import { db } from '../firebase'
+import { firebase } from '../firebase'
 
 const AddChat = ({navigation}) => {
     const [input, setInput]= useState("");
+    const db = firebase.firestore();
 
     useLayoutEffect(()=>{
         navigation.setOptions({
@@ -18,17 +19,20 @@ const AddChat = ({navigation}) => {
 
 
     const createChat = async()=> {
-        
+     await db.collection('chats').add({
+         chatName : input,
+     }).then(()=>{
+         navigation.goBack();
+     }).catch((err)=> alert(err))
     }
 
     return (
         <View styles={styles.container}>
-            <Input 
-                placeholder="Enter a chat name"
+             <Input 
+                type="text"
                 value={input}
-                onChange={(text) => setInput(text)}
-                onSubmitEditing={createChat}
-                />
+                onChangeText={(text)=> setInput(text)}
+                placeholder="Image URL" />
             <Button onPress={createChat} title="Create new Chat" />
         </View>
     )
