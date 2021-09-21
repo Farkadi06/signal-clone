@@ -7,3 +7,16 @@
 
 - Scan the QR code, to demo the application on your phone : https://expo.io/@farkadi/signal 
 - Or visit the web version here : https://signal-clone-53a52.web.app/
+
+## 🗣️ Author
+
+FARKADI OUSSAMA
+
+- Github: [@Farkadi06](https://github.com/Farkadi06)
+
+- LinkedIn: [FARKADI OUSSAMA](https://www.linkedin.com/in/oussama-farkadi/)
+
+## ⭐ Show your support
+
+Give a ⭐️ if you like this project!
+
